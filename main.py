@@ -1,7 +1,8 @@
 # See: "requests library Tutorial" module (in this project)
+
 import requests
-import smtplib as smtp
 from send_email import send_email
+from send_email_2 import send_email_2
 
 # Not very useful to just get the contents of web page (which is meant to be read by humans)
 # url = "https://finance.yahoo.com"
@@ -28,19 +29,26 @@ content = r.json()  # Make data more accessible:
 # print(content["articles"])
 
 # Access the article titles and descriptions within the dictionary
-message = """\
-Subject: Latest Tesla News
-
-"""
+message = ""
 for article in content["articles"]:
     # print(article["title"])
     # print(article["description"])
 
     title = article["title"]
     description = article["description"]
-    message += title + '\n'
-    message += description + '\n'
-    message += '\n'
 
-# Email titles and descriptions to myself
+    message += title + '\n'
+    message += description + (2 * '\n')
+
+# Method 1:
+# ---------
+# message = """\
+# Subject: Latest Tesla News
+#
+# """ + message                      # Insert Subject at start of message
+# message = message.encode("utf-8")  # Convert to UTF-8 encoding
 # send_email(message)
+
+# Method 2:
+# ---------
+send_email_2(subject="Latest Tesla News", message=message)

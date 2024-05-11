@@ -37,8 +37,16 @@ for article in content["articles"]:
     title = article["title"]
     description = article["description"]
 
-    message += title + '\n'
-    message += description + (2 * '\n')
+    # Handle situations in which title and/or description are 'None'
+    if title:
+        message += title + '\n'
+    else:
+        message += "[No Title]" + '\n'
+
+    if description:
+        message += description + (2 * '\n')
+    else:
+        message += "[No Description]" + (2 * '\n')
 
 # Method 1:
 # ---------
